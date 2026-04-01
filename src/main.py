@@ -71,6 +71,8 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
         logging.debug('_patch()')
 
         d = protocol.oc1_decode(bs)
+        
+        logging.debug(d)
 
         self.server._settings = d
         for voice in self.server._voices.values():
@@ -81,6 +83,8 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
         logging.debug('_key_down()')
 
         d = protocol.oc2_decode(bs)
+        
+        logging.debug(d)
 
         voices = self.server._voices
         
@@ -100,6 +104,8 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
         logging.debug('_key_up()')
 
         d = protocol.oc3_decode(bs)
+        
+        logging.debug(d)
 
         voices = self.server._voices
         if d['key'] in voices.keys():
@@ -110,6 +116,8 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
         logging.debug('_reset()')
 
         d = protocol.oc4_decode(bs)
+        
+        logging.debug(d)
 
         voices = self.server._voices
         for k in list(voices.keys()):
