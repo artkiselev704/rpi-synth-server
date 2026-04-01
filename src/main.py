@@ -68,7 +68,7 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
             logging.error('Failed to decode bytes: {} {}'.format(data, repr(e)))
 
     def _patch(self, bs: ConstBitStream) -> None:
-        logging.info('_patch()')
+        logging.debug('_patch()')
 
         d = protocol.oc1_decode(bs)
 
@@ -78,7 +78,7 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
                 voice.set_input(k, v)
 
     def _key_down(self, bs: ConstBitStream) -> None:
-        logging.info('_key_down()')
+        logging.debug('_key_down()')
 
         d = protocol.oc2_decode(bs)
 
@@ -97,7 +97,7 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
             voices[d['key']] = patch
 
     def _key_up(self, bs: ConstBitStream) -> None:
-        logging.info('_key_up()')
+        logging.debug('_key_up()')
 
         d = protocol.oc3_decode(bs)
 
