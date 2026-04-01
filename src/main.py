@@ -15,7 +15,7 @@ LOG_LEVEL = 0
 logging.basicConfig(level=LOG_LEVEL)
 
 
-class QtSynthServer(socketserver.UDPServer):
+class RPiSynthServer(socketserver.UDPServer):
     _graph: signalflow.AudioGraph
     _voices: dict[int, NotePatch]
     _settings: dict[str, Any]
@@ -38,7 +38,7 @@ class QtSynthServer(socketserver.UDPServer):
         super().__init__(server_address, RequestHandlerClass, bind_and_activate)
 
 
-class QtSynthServerHandler(socketserver.BaseRequestHandler):
+class RPiSynthServerHandler(socketserver.BaseRequestHandler):
     def handle(self) -> None:
         data = self.request[0]
         if len(data) == 0:
@@ -113,7 +113,7 @@ class QtSynthServerHandler(socketserver.BaseRequestHandler):
 
 
 def main():
-    with QtSynthServer((HOST, PORT), QtSynthServerHandler) as server:
+    with RPiSynthServer((HOST, PORT), RPiSynthServerHandler) as server:
         try:
             server.serve_forever()
         except KeyboardInterrupt:
