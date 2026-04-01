@@ -109,7 +109,7 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
     def _reset(self, bs: ConstBitStream) -> None:
         logging.debug('_reset()')
 
-        d = protocol.oc3_decode(bs)
+        d = protocol.oc4_decode(bs)
 
         voices = self.server._voices
         for k in list(voices.keys()):
