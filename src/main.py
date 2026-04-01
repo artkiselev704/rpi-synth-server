@@ -83,6 +83,11 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
         d = protocol.oc2_decode(bs)
 
         voices = self.server._voices
+        
+        if len(voices.keys()) > 6:
+            logging.debug('Voices limit reached. Ignoring.')
+            return
+        
         if d['key'] not in voices.keys():
             patch = NotePatch()
             patch.set_input('note', d['key'])
