@@ -5,11 +5,9 @@ from typing import Any
 import signalflow
 from bitstring import ConstBitStream
 
+import const
 import protocol
 from patch import NotePatch
-
-import const
-
 
 logging.basicConfig(level=const.LOG_LEVEL)
 
@@ -70,7 +68,7 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
         logging.debug('_patch()')
 
         d = protocol.oc1_decode(bs)
-        
+
         logging.debug(d)
 
         self.server._settings = d
@@ -82,15 +80,15 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
         logging.debug('_key_down()')
 
         d = protocol.oc2_decode(bs)
-        
+
         logging.debug(d)
 
         voices = self.server._voices
-        
+
         if len(voices.keys()) >= const.POLY_MODE:
             logging.debug('Voices limit reached. Ignoring.')
             return
-        
+
         if d['key'] not in voices.keys():
             patch = NotePatch()
             patch.set_input('note', d['key'])
@@ -103,7 +101,7 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
         logging.debug('_key_up()')
 
         d = protocol.oc3_decode(bs)
-        
+
         logging.debug(d)
 
         voices = self.server._voices
@@ -115,7 +113,7 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
         logging.debug('_reset()')
 
         d = protocol.oc4_decode(bs)
-        
+
         logging.debug(d)
 
         voices = self.server._voices
