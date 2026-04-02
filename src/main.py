@@ -8,11 +8,10 @@ from bitstring import ConstBitStream
 import protocol
 from patch import NotePatch
 
-HOST = '0.0.0.0'
-PORT = 4000
-LOG_LEVEL = 0
+import const
 
-logging.basicConfig(level=LOG_LEVEL)
+
+logging.basicConfig(level=const.LOG_LEVEL)
 
 
 class RPiSynthServer(socketserver.UDPServer):
@@ -88,7 +87,7 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
 
         voices = self.server._voices
         
-        if len(voices.keys()) > 6:
+        if len(voices.keys()) > const.POLY_MODE:
             logging.debug('Voices limit reached. Ignoring.')
             return
         
@@ -126,7 +125,7 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
 
 
 def main():
-    with RPiSynthServer((HOST, PORT), RPiSynthServerHandler) as server:
+    with RPiSynthServer((const.HOST, const.PORT), RPiSynthServerHandler) as server:
         try:
             server.serve_forever()
         except KeyboardInterrupt:

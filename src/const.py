@@ -1,0 +1,4 @@
+HOST = '0.0.0.0'
+PORT = 4000
+LOG_LEVEL = 0
+POLY_MODE = 3
