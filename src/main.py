@@ -87,7 +87,7 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
 
         voices = self.server._voices
         
-        if len(voices.keys()) > const.POLY_MODE:
+        if len(voices.keys()) >= const.POLY_MODE:
             logging.debug('Voices limit reached. Ignoring.')
             return
         
