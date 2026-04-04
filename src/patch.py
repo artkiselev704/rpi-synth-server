@@ -7,6 +7,7 @@ class NotePatch(Patch):
 
         # Basic parameters
         note = self.add_input('note')
+        gate = self.add_input('gate', 1.0)
 
         # Oscillator 1 parameters
         osc1_type = self.add_input('osc1_type', 0)
@@ -92,7 +93,9 @@ class NotePatch(Patch):
         osc3_output = osc3_type * osc3_amplitude
 
         # Mix output
-        output = StereoPanner(osc1_output + osc2_output + osc3_output)
+        output = StereoPanner(
+            (osc1_output + osc2_output + osc3_output) * ADSREnvelope(attack=0.01, release=0.01, gate=gate)
+        )
 
         # Send output
         self.set_output(output)

@@ -106,7 +106,7 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
 
         voices = self.server._voices
         if d['key'] in voices.keys():
-            voices[d['key']].stop()
+            voices[d['key']].set_input('gate', 0.0)
             del voices[d['key']]
 
     def _reset(self, bs: ConstBitStream) -> None:
@@ -118,7 +118,7 @@ class RPiSynthServerHandler(socketserver.BaseRequestHandler):
 
         voices = self.server._voices
         for k in list(voices.keys()):
-            voices[k].stop()
+            voices[k].set_input('gate', 0.0)
             del voices[k]
 
 
